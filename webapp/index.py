@@ -46,11 +46,11 @@ def get_index(name, model):
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript">
           $(document).ready(function() {
-            $("#MHz100").bind('DOMMouseScroll mousewheel', function(e){
+            $("#MHz100").bind('mousewheel DOMMouseScroll', function(e){
               $.ajax({
                 type: "PUT",
                 url: "/console_service",
-                data: 'up'
+                data: {"direction": e.originalEvent.detail}
               })
               .done(function(string) {
                 $("#MHz100").text(string);
@@ -71,11 +71,11 @@ def get_index(name, model):
     ''' % (get_header(name), get_content(model), get_footer())
     return index_html
 
-#if(e.originalEvent.wheelDelta /120 > 0) {
-#    data: {"\"direction\": \"up\","}
-#} else {
-#    data: {"\"direction\": \"down\","}
-#}
+#if(e.originalEvent.detail > 0) {
+#                    data: {"direction": "up"}
+#                } else {
+#                    data: {"direction": "down"}
+#                }
 #==============================================================================================
 # PRIVATE
 #==============================================================================================
