@@ -50,12 +50,10 @@ def get_index(name, model):
               $.ajax({
                 type: "PUT",
                 url: "/console_service",
-                data: {
-                        %s
-                    }
+                data: 'up'
               })
               .done(function(string) {
-                $("#MHz100").val(string);
+                $("#MHz100").text(string);
               });
               e.preventDefault();
             });
@@ -70,20 +68,17 @@ def get_index(name, model):
         </div>
     </body>
     </html>
-    ''' % (get_data(), get_header(name), get_content(model), get_footer())
+    ''' % (get_header(name), get_content(model), get_footer())
     return index_html
 
+#if(e.originalEvent.wheelDelta /120 > 0) {
+#    data: {"\"direction\": \"up\","}
+#} else {
+#    data: {"\"direction\": \"down\","}
+#}
 #==============================================================================================
 # PRIVATE
 #==============================================================================================
-
-#-------------------------------------------------
-# Data HTML
-def get_data():     
-
-    data = ''
-    
-    return data
         
 #-------------------------------------------------
 # Header HTML

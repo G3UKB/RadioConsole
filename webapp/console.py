@@ -65,8 +65,10 @@ class ConsoleWebService(object):
     
     #-------------------------------------------------
     # Called by a PUT request
-    def PUT(self):
-        return "PUT called"
+    def PUT(self, direction):
+        #return "PUT called"
+        print("data: ", direction)
+        return "5"
     
     #-------------------------------------------------
     # Called by a GET request
@@ -100,7 +102,7 @@ if __name__ == '__main__':
     cherrypy_conf = os.path.join(os.path.dirname(__file__), 'cherrypy.conf')
     # Create web app instances
     webapp = Console('Web Console', model)
-    webapp.webrelay_service = ConsoleWebService()
+    webapp.console_service = ConsoleWebService()
 
     # Start
     cherrypy.quickstart(webapp, config=cherrypy_conf)
