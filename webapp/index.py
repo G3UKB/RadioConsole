@@ -46,7 +46,7 @@ def get_index(name, model):
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript">
           $(document).ready(function() {
-            $("#mode_apply").click(function(e) {
+            $("#MHz100").bind('DOMMouseScroll mousewheel', function(e){
               $.ajax({
                 type: "PUT",
                 url: "/console_service",
@@ -55,7 +55,7 @@ def get_index(name, model):
                     }
               })
               .done(function(string) {
-                $("#response").val(string);
+                $("#MHz100").val(string);
               });
               e.preventDefault();
             });
@@ -66,12 +66,11 @@ def get_index(name, model):
         <div id="container">
             <div id="header"> %s </div>
             <div id="content"> %s </div>
-            <div id="update"> %s </div>
             <div id="footer"> %s </div>
         </div>
     </body>
     </html>
-    ''' % (get_data(), get_header(name), get_content(model), get_update(), get_footer())
+    ''' % (get_data(), get_header(name), get_content(model), get_footer())
     return index_html
 
 #==============================================================================================
@@ -96,26 +95,24 @@ def get_header(name):
 def get_content(model):
     
     m = model.get_model()
-    content = '''
-    <table id=tmain>
-        <tr>
-            <th>Channel</th>
-            <th id="name-col">Name</th>
-            <th>Control</th>
-        </tr>
-    </table>
+    content = ''' 
+    <p>
+    <label id="MHz100" class="MHz">0</label>
+    <label id="MHz10" class="MHz">0</label>
+    <label id="MHz1" class="MHz">0</label>
+    <label id="Sep1" class="Sep">.</label>
+    <label id="KHz100" class="KHz">0</label>
+    <label id="KHz10" class="KHz">0</label>
+    <label id="KHz1" class="KHz">0</label>
+    <label id="Sep2" class="Sep">.</label>
+    <label id="Hz100" class="Hz">0</label>
+    <label id="Hz10" class="Hz">0</label>
+    <label id="Hz1" class="Hz">0</label>
+    </p>
     '''
     
     return content
     
-    
-#-------------------------------------------------
-# Updater HTML
-def get_update():
-    return ''' 
-    <button type="button" id="console_apply">Apply</button> <input id="response" type="text" />
-    '''
-
 #-------------------------------------------------
 # Footer HTML
 def get_footer():
