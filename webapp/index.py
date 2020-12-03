@@ -103,6 +103,9 @@ def get_content(model):
     <label id="Hz100" class="Hz">0</label>
     <label id="Hz10" class="Hz">0</label>
     <label id="Hz1" class="Hz">0</label>
+    
+    <i class="arrow up"></i>
+    <i class="arrow down"></i>
     </p>
     '''
     
