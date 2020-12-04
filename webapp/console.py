@@ -59,7 +59,8 @@ class ConsoleWebService(object):
     
     def __init__(self):
         # Create the CAT instance
-        pass
+        self.__f = 7.1
+        self.__last = 0
     
     @cherrypy.tools.accept(media='text/plain')
     
@@ -67,8 +68,20 @@ class ConsoleWebService(object):
     # Called by a PUT request
     def PUT(self, direction):
         #return "PUT called"
-        print("data: ", direction)
-        return "5"
+        #print("data: ", direction)
+        # Lets say KHz for testing
+        direction = int((float(direction)))
+        if direction > self.__last:
+            # Freq up
+            self.__f = self.__f + 0.001
+        else:
+            # Freq down
+            self.__f = self.__f - 0.001
+        # Convert float freq to a 9 digit string.
+        hz = int(self.__f * 1000000)
+        s = str(hz)
+        self.__last = direction
+        return (str(hz)).rjust(9, '0')
     
     #-------------------------------------------------
     # Called by a GET request
