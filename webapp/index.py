@@ -44,8 +44,13 @@ def get_index(name, model):
     <head>
         <link href="/static/css/console.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="/static/js/jogDial.js">
+            
+        </script>
         <script type="text/javascript">
           $(document).ready(function() {
+            var el = document.getElementById('dial');
+            var dial = JogDial(el, {debug: true});
             $("#MHz100").bind('mousewheel DOMMouseScroll', function(e){
               $.ajax({
                 type: "PUT",
@@ -63,6 +68,7 @@ def get_index(name, model):
     <body>
         <div id="container">
             <div id="header"> %s </div>
+            <div id="dial"></div>
             <div id="content"> %s </div>
             <div id="footer"> %s </div>
         </div>

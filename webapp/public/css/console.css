@@ -74,6 +74,11 @@
 	height: 25px;
 }
 
+#dial {
+	background-color: rgba(159,0,0,0.5);
+	width: 200px;
+        height: 200px;
+}
 /*-------------------------------------------------*/
 /* Style by class */
 .names {
