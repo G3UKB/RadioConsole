@@ -32,7 +32,7 @@ import cherrypy
 
 # Application imports
 # The index HTML
-import index
+import page
 import console_model
 
 #=====================================================
@@ -49,7 +49,7 @@ class Console:
     def index(self):
         # CherryPy will call this method for the root URI ("/") and send
         # its return value to the client.
-        return index.get_index(self.__name, self.__model)
+        return page.get_page(self.__name, self.__model)
 
 #=====================================================
 # The web service class
