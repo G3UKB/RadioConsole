@@ -5,8 +5,8 @@ $(document).ready(function() {
   dial.on("mousemove", function(e){
       $.ajax({
           type: "PUT",
-          url: "/console_service",
-          data: {"direction": e.target.rotation}
+          url: "/dial_service",
+          data: {"rotation": e.target.rotation}
       })
       .done(function(string) {
           $("#MHz100").text(string[0]);
@@ -21,15 +21,13 @@ $(document).ready(function() {
     });
     e.preventDefault();
   });
-  
-  $("#MHz100").bind('mousewheel DOMMouseScroll', function(e){
+  $("#100KHz").click(function(e) {
     $.ajax({
       type: "PUT",
-      url: "/console_service",
-      data: {"direction": e.originalEvent.detail}
-    })
-    .done(function(string) {
-      $("#MHz100").text(string);
+      url: "/rate_service",
+      data: {
+              "rate": "100KHz"
+          }
     });
     e.preventDefault();
   });

@@ -184,6 +184,10 @@
 	width: 70px;
 }
 
+.IncHz:hover {
+	background-color: #e5e5e5;
+}
+
 .IncKHz {
 	display:inline-block;
 	text-align: center;
@@ -192,6 +196,10 @@
 	border: 2px solid red;
 	border-radius: 5px;
 	width: 70px;
+}
+
+.IncKHz:hover {
+	background-color: #e5e5e5;
 }
 
 /*-------------------------------------------------*/

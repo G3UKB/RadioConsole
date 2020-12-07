@@ -101,11 +101,11 @@ def get_increment(model):
     m = model.get_model()
     content = ''' 
     <p>
-    <label id="10Hz" class="IncHz">10Hz</label>
-    <label id="100Hz" class="IncHz">100Hz</label>
-    <label id="1KHz" class="IncKHz">1KHz</label>
-    <label id="10KHz" class="IncKHz">10KHz</label>
     <label id="100KHz" class="IncKHz">100KHz</label>
+    <label id="10KHz" class="IncKHz">10KHz</label>
+    <label id="1KHz" class="IncKHz">1KHz</label>
+    <label id="100Hz" class="IncHz">100Hz</label>
+    <label id="10Hz" class="IncHz">10Hz</label>
     </p>
     '''
     return content

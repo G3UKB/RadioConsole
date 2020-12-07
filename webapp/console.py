@@ -52,26 +52,25 @@ class Console:
         return page.get_page(self.__name, self.__model)
 
 #=====================================================
-# The web service class
+# The web service classes
 #=====================================================
 @cherrypy.expose
-class ConsoleWebService(object):
+class DialWebService(object):
     
     def __init__(self):
-        # Create the CAT instance
         self.__f = 7.1
-        self.__last = 0
+        self.__lastRotation = 0
     
     @cherrypy.tools.accept(media='text/plain')
     
     #-------------------------------------------------
     # Called by a PUT request
-    def PUT(self, direction):
+    def PUT(self, rotation):
         #return "PUT called"
-        #print("data: ", direction)
+        #print("data: ", rotation)
         # Lets say KHz for testing
-        direction = int((float(direction)))
-        if direction > self.__last:
+        rotation = int((float(rotation)))
+        if rotation > self.__lastRotation:
             # Freq up
             self.__f = self.__f + 0.001
         else:
@@ -80,7 +79,7 @@ class ConsoleWebService(object):
         # Convert float freq to a 9 digit string.
         hz = int(self.__f * 1000000)
         s = str(hz)
-        self.__last = direction
+        self.__lastRotation = rotation
         return (str(hz)).rjust(9, '0')
     
     #-------------------------------------------------
@@ -97,7 +96,21 @@ class ConsoleWebService(object):
     # Called by a DELETE request
     def DELETE(self):
         return "DELETE called"
+
+@cherrypy.expose
+class RateWebService(object):
     
+    def __init__(self):
+        self.__rate = "100KHz"
+        
+    @cherrypy.tools.accept(media='text/plain')
+    
+    #-------------------------------------------------
+    # Called by a PUT request
+    def PUT(self, rate):
+        
+        print(rate)
+        
 #==============================================================================================
 # Main code
 #==============================================================================================
@@ -115,7 +128,8 @@ if __name__ == '__main__':
     cherrypy_conf = os.path.join(os.path.dirname(__file__), 'cherrypy.conf')
     # Create web app instances
     webapp = Console('Web Console', model)
-    webapp.console_service = ConsoleWebService()
+    webapp.dial_service = DialWebService()
+    webapp.rate_service = RateWebService()
 
     # Start
     cherrypy.quickstart(webapp, config=cherrypy_conf)
