@@ -26,75 +26,16 @@
 /*-------------------------------------------------*/
 /* Style by id */
 /*
-#container {
-	top: 10px;
-	left: 10px;
-	right: 10px;
-	text-align: left;
-}
-
-#header {
-	background-color: rgba(64,128,128, 0.5);
-	text-align: center;
-	position: relative;
-}
-
-/*
-#frequency {
-	background-color: gray;
-        height: 70px;
-	text-align: center;
-}
-
-
-#dial {
-	background-color: orange;
-	width: 200px;
-        height: 200px;
-	top: 10px;
-	bottom: 10px;
-}
-
-#increment {
-	background-color: blue;
-	width: 200px;
-	height: 100px;
-}
-
-#mode {
-	background-color: red;
-	width: 200px;
-	height: 100px;
-}
-
-#band {
-	background-color: green;
-	width: 200px;
-	height: 100px;
-}
-
-/*
-#footer {
-	clear: both;
-	background-color: rgba(64,128,128, 0.5);
-	position: relative;
-	top: 20px;
-	right: 10px;
-	text-align: center;
-}
-*/
 
 /*-------------------------------------------------*/
 /* Style by class */
+
+/*-------------------------------------------------*/
+/* Grid container and grid items */
 .grid-container {
 	display: grid;
-	/*grid-column-gap: 10px;
-	grid-row-gap: 10px;
-	grid-gap: 10px;
-	padding: 10px;*/
 	grid-template-columns: 210px auto;
 	grid-template-rows: 60px 70px 70px 70px 70px 30px;
-	/*justify-content: space-around;*/
 }
 
 .header-item {
@@ -113,18 +54,14 @@
 }
 
 .dial-item {
-	/*background-color: orange;
-	width: 200px;
-        height: 200px;*/
+	text-align: center;
 	margin: 5px 5px 5px 5px;
 	grid-column: 1;
 	grid-row: 3 / span 3;
 }
 
 .inc-item {
-	/*background-color: blue;
-	width: 200px;
-	height: 100px;*/
+	text-align: center;
 	margin: 5px 5px 5px 5px;
 	grid-column: 2;
 	grid-row: 3;
@@ -132,8 +69,6 @@
 
 .mode-item {
 	background-color: red;
-	/*width: 200px;
-	height: 100px;*/
 	margin: 0px 5px 5px 5px;
 	grid-column: 2;
 	grid-row: 4;
@@ -141,8 +76,6 @@
 
 .band-item {
 	background-color: green;
-	/*width: 200px;
-	height: 100px;*/
 	margin: 0px 5px 5px 5px;
 	grid-column: 2;
 	grid-row: 5;
@@ -155,6 +88,8 @@
 	grid-row: 6;
 }
 
+/*-------------------------------------------------*/
+/* Freq digit styles */
 .MHz {
 	font-size: 50px;
 	color: blue;
@@ -174,6 +109,8 @@
 	font-size: 50px;
 }
 
+/*-------------------------------------------------*/
+/* Freq increment styles */
 .IncHz {
 	display:inline-block;
 	text-align: center;

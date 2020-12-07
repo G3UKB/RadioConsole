@@ -1,4 +1,7 @@
-
+function highlight_rate(rate) {
+    rate.css('background', "red");
+  }
+  
 $(document).ready(function() {
   var el = document.getElementById('dial');
   var dial = JogDial(el, {debug: true});
@@ -22,6 +25,7 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $("#100KHz").click(function(e) {
+    highlight_rate($("#100KHz"));
     $.ajax({
       type: "PUT",
       url: "/rate_service",
@@ -31,5 +35,46 @@ $(document).ready(function() {
     });
     e.preventDefault();
   });
+  $("#10KHz").click(function(e) {
+    $.ajax({
+      type: "PUT",
+      url: "/rate_service",
+      data: {
+              "rate": "10KHz"
+          }
+    });
+    e.preventDefault();
+  });
+  $("#1KHz").click(function(e) {
+    $.ajax({
+      type: "PUT",
+      url: "/rate_service",
+      data: {
+              "rate": "1KHz"
+          }
+    });
+    e.preventDefault();
+  });
+  $("#100Hz").click(function(e) {
+    $.ajax({
+      type: "PUT",
+      url: "/rate_service",
+      data: {
+              "rate": "100Hz"
+          }
+    });
+    e.preventDefault();
+  });
+  $("#10Hz").click(function(e) {
+    $.ajax({
+      type: "PUT",
+      url: "/rate_service",
+      data: {
+              "rate": "10Hz"
+          }
+    });
+    e.preventDefault();
+  });
 });
+
 

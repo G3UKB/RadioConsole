@@ -35,6 +35,9 @@ import cherrypy
 import page
 import console_model
 
+# Module globals
+g__rate = 0.01
+
 #=====================================================
 # The main application class
 #===================================================== 
@@ -66,16 +69,17 @@ class DialWebService(object):
     #-------------------------------------------------
     # Called by a PUT request
     def PUT(self, rotation):
+        global g__rate
         #return "PUT called"
         #print("data: ", rotation)
         # Lets say KHz for testing
         rotation = int((float(rotation)))
         if rotation > self.__lastRotation:
             # Freq up
-            self.__f = self.__f + 0.001
+            self.__f = self.__f + g__rate
         else:
             # Freq down
-            self.__f = self.__f - 0.001
+            self.__f = self.__f - g__rate
         # Convert float freq to a 9 digit string.
         hz = int(self.__f * 1000000)
         s = str(hz)
@@ -101,15 +105,16 @@ class DialWebService(object):
 class RateWebService(object):
     
     def __init__(self):
-        self.__rate = "100KHz"
+        pass
         
     @cherrypy.tools.accept(media='text/plain')
     
     #-------------------------------------------------
     # Called by a PUT request
     def PUT(self, rate):
-        
-        print(rate)
+        global g__rate
+        rateLookup = {"100KHz": 0.1, "10KHz": 0.01, "1KHz": 0.001, "100Hz": 0.0001, "10Hz": 0.00001,}
+        g__rate = rateLookup[rate]
         
 #==============================================================================================
 # Main code
