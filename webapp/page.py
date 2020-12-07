@@ -92,7 +92,6 @@ def get_frequency(model):
     <label id="Hz1" class="Hz">0</label>
     </p>
     '''
-    
     return content
 
 #------------------------------------------------- 
@@ -100,7 +99,16 @@ def get_frequency(model):
 def get_increment(model):
     
     m = model.get_model()
-    return ''
+    content = ''' 
+    <p>
+    <label id="10Hz" class="IncHz">10Hz</label>
+    <label id="100Hz" class="IncHz">100Hz</label>
+    <label id="1KHz" class="IncKHz">1KHz</label>
+    <label id="10KHz" class="IncKHz">10KHz</label>
+    <label id="100KHz" class="IncKHz">100KHz</label>
+    </p>
+    '''
+    return content
 
 #------------------------------------------------- 
 # Mode div
