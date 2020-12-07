@@ -48,15 +48,18 @@ def get_page(name, model):
         <script type="text/javascript" src="/static/js/console.js"></script>
     </head>
     <body>
-        <div id="container">
-            <div id="header"> %s </div>
-            <div id="dial"></div>
-            <div id="content"> %s </div>
-            <div id="footer"> %s </div>
+        <div id="container" class="grid-container">
+            <div id="header" class="header-item"> %s </div>
+            <div id="frequency" class="freq-item"> %s </div>
+            <div id="dial" class="dial-item"></div>
+            <div id="increment" class="inc-item"> %s </div>
+            <div id="mode" class="mode-item"> %s </div>
+            <div id="band" class="band-item"> %s </div>
+            <div id="footer" class="footer-item"> %s </div>
         </div>
     </body>
     </html>
-    ''' % (get_header(name), get_content(model), get_footer())
+    ''' % (get_header(name), get_frequency(model), get_increment(model), get_mode(model), get_band(model), get_footer())
     return index_html
 
 #==============================================================================================
@@ -70,7 +73,8 @@ def get_header(name):
 
 #-------------------------------------------------
 # Content HTML
-def get_content(model):
+# Frequency div
+def get_frequency(model):
     
     m = model.get_model()
     content = ''' 
@@ -90,6 +94,27 @@ def get_content(model):
     '''
     
     return content
+
+#------------------------------------------------- 
+# Increament div
+def get_increment(model):
+    
+    m = model.get_model()
+    return ''
+
+#------------------------------------------------- 
+# Mode div
+def get_mode(model):
+    
+    m = model.get_model()
+    return ''
+
+#------------------------------------------------- 
+# Band div
+def get_band(model):
+    
+    m = model.get_model()
+    return ''
     
 #-------------------------------------------------
 # Footer HTML

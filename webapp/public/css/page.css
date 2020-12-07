@@ -25,10 +25,11 @@
 
 /*-------------------------------------------------*/
 /* Style by id */
+/*
 #container {
-	position: relative;
 	top: 10px;
 	left: 10px;
+	right: 10px;
 	text-align: left;
 }
 
@@ -36,20 +37,43 @@
 	background-color: rgba(64,128,128, 0.5);
 	text-align: center;
 	position: relative;
-	right: 10px;
 }
+
+/*
+#frequency {
+	background-color: gray;
+        height: 70px;
+	text-align: center;
+}
+
 
 #dial {
-	background-color: rgba(159,0,0,0.5);
+	background-color: orange;
 	width: 200px;
         height: 200px;
+	top: 10px;
+	bottom: 10px;
 }
 
-#content {
-	margin: 10px auto;
-	width: 500px;
+#increment {
+	background-color: blue;
+	width: 200px;
+	height: 100px;
 }
 
+#mode {
+	background-color: red;
+	width: 200px;
+	height: 100px;
+}
+
+#band {
+	background-color: green;
+	width: 200px;
+	height: 100px;
+}
+
+/*
 #footer {
 	clear: both;
 	background-color: rgba(64,128,128, 0.5);
@@ -58,26 +82,96 @@
 	right: 10px;
 	text-align: center;
 }
+*/
 
 /*-------------------------------------------------*/
 /* Style by class */
+.grid-container {
+	display: grid;
+	/*grid-column-gap: 10px;
+	grid-row-gap: 10px;
+	grid-gap: 10px;
+	padding: 10px;*/
+	grid-template-columns: 210px auto;
+	grid-template-rows: 60px 70px 70px 70px 70px 30px;
+	/*justify-content: space-around;*/
+}
+
+.header-item {
+	background-color: rgba(64,128,128, 0.5);
+	text-align: center;
+	grid-column: 1 / span 2;
+	grid-row: 1;
+}
+
+.freq-item {
+	background-color: gray;
+        height: 70px;
+	text-align: center;
+	grid-column: 1 / span 2;
+	grid-row: 2;
+}
+
+.dial-item {
+	/*background-color: orange;
+	width: 200px;
+        height: 200px;*/
+	margin: 5px 5px 5px 5px;
+	grid-column: 1;
+	grid-row: 3 / span 3;
+}
+
+.inc-item {
+	background-color: blue;
+	/*width: 200px;
+	height: 100px;*/
+	margin: 5px 5px 5px 5px;
+	grid-column: 2;
+	grid-row: 3;
+}
+
+.mode-item {
+	background-color: red;
+	/*width: 200px;
+	height: 100px;*/
+	margin: 0px 5px 5px 5px;
+	grid-column: 2;
+	grid-row: 4;
+}
+
+.band-item {
+	background-color: green;
+	/*width: 200px;
+	height: 100px;*/
+	margin: 0px 5px 5px 5px;
+	grid-column: 2;
+	grid-row: 5;
+}
+
+.footer-item {
+	background-color: rgba(64,128,128, 0.5);
+	text-align: center;
+	grid-column: 1 / span 2;
+	grid-row: 6;
+}
+
 .MHz {
-	font-size: 30px;
+	font-size: 50px;
 	color: blue;
 }
 
 .KHz {
-	font-size: 30px;
+	font-size: 50px;
 	color: blue;
 }
 
 .Hz {
-	font-size: 20px;
+	font-size: 40px;
 	color: orange;
 }
 
 .Sep {
-	font-size: 30px;
+	font-size: 50px;
 }
 
 /*-------------------------------------------------*/
