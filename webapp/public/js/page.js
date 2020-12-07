@@ -1,5 +1,11 @@
+
 function highlight_rate(rate) {
-    rate.css('background', "red");
+    $("#100KHz").css('background', "#e5e5e5");
+    $("#10KHz").css('background', "#e5e5e5");
+    $("#1KHz").css('background', "#e5e5e5");
+    $("#100Hz").css('background', "#e5e5e5");
+    $("#10Hz").css('background', "#e5e5e5");
+    rate.css('background', "#a5e5e5");
   }
   
 $(document).ready(function() {
@@ -36,6 +42,7 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $("#10KHz").click(function(e) {
+    highlight_rate($("#10KHz"));
     $.ajax({
       type: "PUT",
       url: "/rate_service",
@@ -46,6 +53,7 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $("#1KHz").click(function(e) {
+    highlight_rate($("#1KHz"));
     $.ajax({
       type: "PUT",
       url: "/rate_service",
@@ -56,6 +64,7 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $("#100Hz").click(function(e) {
+    highlight_rate($("#100Hz"));
     $.ajax({
       type: "PUT",
       url: "/rate_service",
@@ -66,6 +75,7 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $("#10Hz").click(function(e) {
+    highlight_rate($("#10Hz"));
     $.ajax({
       type: "PUT",
       url: "/rate_service",
