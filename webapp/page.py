@@ -45,7 +45,7 @@ def get_page(name, model):
         <link href="/static/css/page.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="/static/js/jogDial.js"></script>
-        <script type="text/javascript" src="/static/js/console.js"></script>
+        <script type="text/javascript" src="/static/js/page.js"></script>
     </head>
     <body>
         <div id="container" class="grid-container">
