@@ -42,7 +42,7 @@ def get_page(name, model):
     index_html = '''
     <html>
     <head>
-        <link href="/static/css/console.css" rel="stylesheet">
+        <link href="/static/css/page.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="/static/js/jogDial.js"></script>
         <script type="text/javascript" src="/static/js/console.js"></script>
@@ -86,9 +86,6 @@ def get_content(model):
     <label id="Hz100" class="Hz">0</label>
     <label id="Hz10" class="Hz">0</label>
     <label id="Hz1" class="Hz">0</label>
-    
-    <i class="arrow up"></i>
-    <i class="arrow down"></i>
     </p>
     '''
     
