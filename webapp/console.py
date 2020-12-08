@@ -115,6 +115,34 @@ class RateWebService(object):
         global g__rate
         rateLookup = {"100KHz": 0.1, "10KHz": 0.01, "1KHz": 0.001, "100Hz": 0.0001, "10Hz": 0.00001,}
         g__rate = rateLookup[rate]
+
+@cherrypy.expose
+class ModeWebService(object):
+    
+    def __init__(self):
+        pass
+        
+    @cherrypy.tools.accept(media='text/plain')
+    
+    #-------------------------------------------------
+    # Called by a PUT request
+    def PUT(self, mode):
+        global g__mode
+        print(mode)
+
+@cherrypy.expose
+class BandWebService(object):
+    
+    def __init__(self):
+        pass
+        
+    @cherrypy.tools.accept(media='text/plain')
+    
+    #-------------------------------------------------
+    # Called by a PUT request
+    def PUT(self, band):
+        global g__band
+        print(band)
         
 #==============================================================================================
 # Main code
@@ -135,6 +163,8 @@ if __name__ == '__main__':
     webapp = Console('Web Console', model)
     webapp.dial_service = DialWebService()
     webapp.rate_service = RateWebService()
+    webapp.mode_service = ModeWebService()
+    webapp.band_service = BandWebService()
 
     # Start
     cherrypy.quickstart(webapp, config=cherrypy_conf)

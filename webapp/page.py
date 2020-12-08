@@ -115,14 +115,34 @@ def get_increment(model):
 def get_mode(model):
     
     m = model.get_model()
-    return ''
+    content = ''' 
+    <p>
+    <label id="LSB" class="Mode">LSB</label>
+    <label id="USB" class="Mode">USB</label>
+    <label id="AM" class="Mode">AM</label>
+    <label id="FM" class="Mode">FM</label>
+    </p>
+    '''
+    return content
 
 #------------------------------------------------- 
 # Band div
 def get_band(model):
     
     m = model.get_model()
-    return ''
+    content = ''' 
+    <p>
+    <label id="B160" class="Band">160</label>
+    <label id="B80" class="Band">80</label>
+    <label id="B40" class="Band">40</label>
+    <label id="B20" class="Band">20</label>
+    <label id="B15" class="Band">15</label>
+    <label id="B10" class="Band">10</label>
+    <label id="B2M" class="Band">2M</label>
+    <label id="B70CM" class="Band">70CM</label>
+    </p>
+    '''
+    return content
     
 #-------------------------------------------------
 # Footer HTML
