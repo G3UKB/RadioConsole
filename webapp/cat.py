@@ -24,9 +24,10 @@
 #
 
 # Application imports
-from imports import *
 from defs import *
+import serial
 import array
+import threading
 
 """
 

@@ -26,10 +26,13 @@
 # ============================================================================
 # CAT
 
+CAT_PORT = '/dev/ttyUSB0'
+BAUD = 9600
+
 # CAT variants
-FT_817ND = 'FT-817ND'
+FT817ND = 'FT-817ND'
 IC7100 = 'IC7100'
-CAT_VARIANTS = [FT_817ND, IC7100]
+CAT_VARIANTS = [FT817ND, IC7100]
 YAESU = 'YAESU'
 ICOM = 'ICOM'
 
@@ -53,6 +56,7 @@ TRANCEIVE_STATUS_CMD = 'tranceivestatuscmd'
 TRANCEIVE_STATUS_SUB = 'tranceivestatussub'
 PTT_ON = 'ptton'
 PTT_OFF = 'pttoff'
+TX_STATUS = 'txstatus'
 SET_FREQ_CMD = 'setfreqcmd'
 SET_FREQ_SUB = 'setfreqsub'
 SET_FREQ = 'setfreq'
@@ -83,6 +87,18 @@ MODE_RTTY = 'rtty'
 MODE_RTTYR = 'rttyr'
 MODE_WFM = 'wfm'
 MODE_DV = 'dv'
+
+# ============================================================================
+# Band default frequency
+BAND_160 = 1.91
+BAND_80 = 3.69
+BAND_40 = 7.09
+BAND_20 = 14.285
+BAND_15 = 21.285
+BAND_10 = 28.635
+BAND_2 = 144.285
+BAND_70 = 430.0
+
 
 # ============================================================================
 # CAT command set to be used by callers

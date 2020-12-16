@@ -27,7 +27,19 @@ function highlight_band(band) {
     $("#B70CM").css('background', "#e5e5e5");
     band.css('background', "#a5e5e5");
   }
-  
+
+function set_freq(string) {
+    $("#MHz100").text(string[0]);
+    $("#MHz10").text(string[1]);
+    $("#MHz1").text(string[2]);
+    $("#KHz100").text(string[3]);
+    $("#KHz10").text(string[4]);
+    $("#KHz1").text(string[5]);
+    $("#Hz100").text(string[6]);
+    $("#Hz10").text(string[7]);
+    $("#Hz1").text(string[8]);
+  }
+    
 $(document).ready(function() {
   var el = document.getElementById('dial');
   var dial = JogDial(el, {debug: true});
@@ -37,17 +49,9 @@ $(document).ready(function() {
           url: "/dial_service",
           data: {"rotation": e.target.rotation}
       })
-      .done(function(string) {
-          $("#MHz100").text(string[0]);
-          $("#MHz10").text(string[1]);
-          $("#MHz1").text(string[2]);
-          $("#KHz100").text(string[3]);
-          $("#KHz10").text(string[4]);
-          $("#KHz1").text(string[5]);
-          $("#Hz100").text(string[6]);
-          $("#Hz10").text(string[7]);
-          $("#Hz1").text(string[8]);
-    });
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#100KHz").click(function(e) {
@@ -158,7 +162,10 @@ $(document).ready(function() {
       data: {
               "band": "160m"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#B80").click(function(e) {
@@ -169,7 +176,10 @@ $(document).ready(function() {
       data: {
               "band": "80m"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#B40").click(function(e) {
@@ -180,7 +190,10 @@ $(document).ready(function() {
       data: {
               "band": "40m"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#B20").click(function(e) {
@@ -191,7 +204,10 @@ $(document).ready(function() {
       data: {
               "band": "20m"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#B15").click(function(e) {
@@ -202,7 +218,10 @@ $(document).ready(function() {
       data: {
               "band": "15m"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#B10").click(function(e) {
@@ -213,7 +232,10 @@ $(document).ready(function() {
       data: {
               "band": "10m"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#B2M").click(function(e) {
@@ -224,7 +246,10 @@ $(document).ready(function() {
       data: {
               "band": "2m"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
   $("#B70CM").click(function(e) {
@@ -235,7 +260,10 @@ $(document).ready(function() {
       data: {
               "band": "70cm"
           }
-    });
+    })
+      .done(function (string) {
+        set_freq(string);
+      });
     e.preventDefault();
   });
 });
