@@ -27,6 +27,7 @@
 import os, sys
 import json
 import queue
+from time import sleep
 
 # Library imports
 import cherrypy
@@ -204,8 +205,17 @@ if __name__ == '__main__':
         access_log.removeHandler(handler)
     
     # Start
-    cherrypy.quickstart(webapp, config=cherrypy_conf)
+    cherrypy.tree.mount(webapp, '/', cherrypy_conf)
+    cherrypy.engine.start()
+    try:
+        while True:
+            sleep(1)
+    except:
+        pass
     
+    #cherrypy.quickstart(webapp, config=cherrypy_conf)
+    g_cat.terminate()
+    cherrypy.engine.exit()
     print("Closing")
         
     
