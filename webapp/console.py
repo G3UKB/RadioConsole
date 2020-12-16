@@ -181,10 +181,6 @@ class BandWebService(object):
 # Main code
 #==============================================================================================
 # Entry point
-
-def tidy_close():
-    print("Closing")
-    
 if __name__ == '__main__':
     # CherryPy always starts with app.root when trying to map request URIs
     # to objects, so we need to mount a request handler root.
@@ -208,10 +204,8 @@ if __name__ == '__main__':
         access_log.removeHandler(handler)
     
     # Start
-    try:
-        cherrypy.quickstart(webapp, config=cherrypy_conf)
-    except:
-        print("Going")
+    cherrypy.quickstart(webapp, config=cherrypy_conf)
+    
     print("Closing")
         
     
