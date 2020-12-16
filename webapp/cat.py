@@ -107,7 +107,6 @@ class CAT:
 				self.__cat_thrd = CATThrd(self.__rig, self.__command_set, self.__device, self.__catq, self.__msgq)
 				self.__cat_thrd.start()
 			except (OSError, serial.SerialException):
-				print(self.__ports)
 				# Failed to open the port, radio device probably still off
 				self.__msgq.put('Failed to open COM port %s for CAT! Available ports are %s.' % (self.__com, self.__ports))
 				return False
@@ -310,41 +309,49 @@ class CATThrd (threading.Thread):
 		while not self.__terminate:
 			try:
 				# Requests are queued
-				while self.__q.qsize() > 0:
-					# Get the command,
-					cmd, param = self.__q.get()
-					# Format
-					(r, cmd_buf) = self.__cat_cls_inst.format_cat_cmd(cmd, param)
-					if r:
-						# We do not assume a response
-						self.__device.write(cmd_buf)
-						if self.__cat_cls_inst.is_response(cmd):
-							if self.__command_set[CLASS] == ICOM:
-								data = bytearray(30)
-								n = 0
-								while True:
-									ch = self.__device.read()
-									data[n:n+1] = ch
-									# There will be a terminator at the end of the OK or NG frame
-									# skip that and then if there is no data we will timeout and
-									# an error response returned from decode.
-									if ch == b'\xfd':
-										break
-									n += 1
-							else:
-								data = self.__device.read(self.__command_set[SERIAL][READ_SZ])
-							# Return data to the caller
-							# Note, this is an async return
-							if len(data) > 0:
-								response = self.__cat_cls_inst.decode_cat_resp(CAT_COMMAND_SETS[self.__rig], cmd, data)
-								self.__catq.put(response)
-						else:
-							# There may be some response data even if we don't expect it.
-							# The serial port seems to return an empty string if there is no data available
+				cmd = None
+				param = None
+				while True:
+					# Only execute the last frequency command
+					try:
+						cmd, param = self.__q.get(block = False)
+						if cmd != CAT_FREQ_SET:
+							# Execute any other commands
+							break
+					except queue.Empty:
+						break
+				# Format
+				(r, cmd_buf) = self.__cat_cls_inst.format_cat_cmd(cmd, param)
+				if r:
+					# We do not assume a response
+					self.__device.write(cmd_buf)
+					if self.__cat_cls_inst.is_response(cmd):
+						if self.__command_set[CLASS] == ICOM:
+							data = bytearray(30)
+							n = 0
 							while True:
 								ch = self.__device.read()
-								if ch == b'': break
-								sleep(0.1)
+								data[n:n+1] = ch
+								# There will be a terminator at the end of the OK or NG frame
+								# skip that and then if there is no data we will timeout and
+								# an error response returned from decode.
+								if ch == b'\xfd':
+									break
+								n += 1
+						else:
+							data = self.__device.read(self.__command_set[SERIAL][READ_SZ])
+						# Return data to the caller
+						# Note, this is an async return
+						if len(data) > 0:
+							response = self.__cat_cls_inst.decode_cat_resp(CAT_COMMAND_SETS[self.__rig], cmd, data)
+							self.__catq.put(response)
+					else:
+						# There may be some response data even if we don't expect it.
+						# The serial port seems to return an empty string if there is no data available
+						#while True:
+						ch = self.__device.read()
+						#if ch == b'0x00': break
+						#sleep(0.1)
 				sleep(0.1)
 			except Exception as e:
 				# Oops
