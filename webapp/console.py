@@ -26,6 +26,7 @@
 # System imports
 import os, sys
 import json
+import queue
 
 # Library imports
 import cherrypy
@@ -34,9 +35,13 @@ import cherrypy
 # The index HTML
 import page
 import console_model
+import cat
 
 # Module globals
 g__rate = 0.01
+g_cat_q = queue.Queue()
+g_msg_q = queue.Queue()
+g_cat = None
 
 #=====================================================
 # The main application class
@@ -44,8 +49,16 @@ g__rate = 0.01
 class Console:
 
     def __init__(self, name, model):
+        
+        global g_cat_q
+        global g_msg_q
+        global g_cat
+        
         self.__name = name
         self.__model = model
+        
+        # Create the cat instance
+        g_cat = cat.CAT('FT817ND', '/dev/ttyUSB0', g_cat_q, g_msg_q)
         
     # Expose the index method through the web
     @cherrypy.expose
