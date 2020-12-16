@@ -26,7 +26,8 @@
 # ============================================================================
 # CAT
 
-CAT_PORT = '/dev/ttyUSB0'
+#CAT_PORT = '/dev/ttyUSB0'
+CAT_PORT = 'COM4'
 BAUD = 9600
 
 # CAT variants
@@ -104,6 +105,8 @@ BAND_70 = 430.0
 # CAT command set to be used by callers
 CAT_LOCK = 'catlock'
 CAT_PTT = 'catptt'
+CAT_PTT_SET = 'catpttset'
+CAT_PTT_GET = 'catpttget'
 CAT_FREQ_SET = 'catfreqset'
 CAT_MODE_SET = 'catmodeset'
 CAT_FREQ_GET = 'catfreqget'

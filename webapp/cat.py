@@ -23,11 +23,17 @@
 #     bob@bobcowdery.plus.com
 #
 
+# System imports
+import os, sys
+
 # Application imports
 from defs import *
 import serial
 import array
 import threading
+import queue
+import traceback
+from time import sleep
 
 """
 
@@ -96,13 +102,14 @@ class CAT:
 				self.__ports = self.__list_serial_ports()
 				self.__device = serial.Serial(port=self.__com, baudrate=self.__baud, parity=self.__command_set[SERIAL][PARITY], stopbits=self.__command_set[SERIAL][STOP_BITS], timeout=self.__command_set[SERIAL][TIMEOUT])
 				self.__port_open = True
-				self.__msgq.append("Opened port %s" % self.__com)
+				self.__msgq.put("Opened port %s" % self.__com)
 				# Create and start the CAT thread
 				self.__cat_thrd = CATThrd(self.__rig, self.__command_set, self.__device, self.__catq, self.__msgq)
 				self.__cat_thrd.start()
 			except (OSError, serial.SerialException):
+				print(self.__ports)
 				# Failed to open the port, radio device probably still off
-				self.__msgq.append('Failed to open COM port %s for CAT! Available ports are %s.' % (self.__com, self.__ports))
+				self.__msgq.put('Failed to open COM port %s for CAT! Available ports are %s.' % (self.__com, self.__ports))
 				return False
 			
 		return True
@@ -229,7 +236,7 @@ class CATThrd (threading.Thread):
 		
 		# Class vars
 		self.__cat_cls_inst = self.__command_set[CLASS](command_set)
-		self.__q = deque(maxlen=4)
+		self.__q = queue.Queue()
 		# Terminate flag
 		self.__terminate = False
 	
@@ -255,7 +262,7 @@ class CATThrd (threading.Thread):
 		# Note we are only interested in the last frequency and the one potentially being executed.
 		# The max_len is therefore set to 2 which discards elements from the opposite end of the q
 		# when the queue is full.
-		self.__q.append((cat_cmd, params))
+		self.__q.put((cat_cmd, params))
 	
 	#-----------------------------------------------
 	def mode_for_id(self, mode_id):
@@ -299,13 +306,13 @@ class CATThrd (threading.Thread):
 		""" Thread entry point """
 		
 		# Handles all CAT interactions with an external tranceiver
-		self.__msgq.append('CAT thread running...')	
+		self.__msgq.put('CAT thread running...')	
 		while not self.__terminate:
 			try:
 				# Requests are queued
-				while len(self.__q) > 0:
+				while self.__q.qsize() > 0:
 					# Get the command,
-					cmd, param = self.__q.popleft()
+					cmd, param = self.__q.get()
 					# Format
 					(r, cmd_buf) = self.__cat_cls_inst.format_cat_cmd(cmd, param)
 					if r:
@@ -330,7 +337,7 @@ class CATThrd (threading.Thread):
 							# Note, this is an async return
 							if len(data) > 0:
 								response = self.__cat_cls_inst.decode_cat_resp(CAT_COMMAND_SETS[self.__rig], cmd, data)
-								self.__catq.append(response)
+								self.__catq.put(response)
 						else:
 							# There may be some response data even if we don't expect it.
 							# The serial port seems to return an empty string if there is no data available
@@ -342,8 +349,8 @@ class CATThrd (threading.Thread):
 			except Exception as e:
 				# Oops
 				print(traceback.format_exc())
-				self.__catq.append((False, 'ERROR [%s]' % (str(e))))
-		self.__msgq.append('CAT thread exiting...')
+				self.__catq.put((False, 'ERROR [%s]' % (str(e))))
+		self.__msgq.put('CAT thread exiting...')
 		
 """
 

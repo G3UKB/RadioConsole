@@ -61,6 +61,7 @@ class Console:
         
         # Create the cat instance
         g_cat = cat.CAT(FT817ND, CAT_PORT, BAUD, g_cat_q, g_msg_q)
+        g_cat.run()
         
     # Expose the index method through the web
     @cherrypy.expose
@@ -198,6 +199,11 @@ if __name__ == '__main__':
     webapp.mode_service = ModeWebService()
     webapp.band_service = BandWebService()
 
+    # Turn off logging
+    access_log = cherrypy.log.access_log
+    for handler in tuple(access_log.handlers):
+        access_log.removeHandler(handler)
+        
     # Start
     cherrypy.quickstart(webapp, config=cherrypy_conf)
         
