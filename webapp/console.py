@@ -206,6 +206,7 @@ if __name__ == '__main__':
     
     # Start
     cherrypy.tree.mount(webapp, "", cherrypy_conf)
+    cherrypy.quickstart()
     cherrypy.engine.start()
     try:
         while True:
