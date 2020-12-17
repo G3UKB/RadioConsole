@@ -205,7 +205,7 @@ if __name__ == '__main__':
         access_log.removeHandler(handler)
     
     # Start
-    cherrypy.tree.mount(webapp, '/', cherrypy_conf)
+    cherrypy.tree.mount(webapp, "", cherrypy_conf)
     cherrypy.engine.start()
     try:
         while True:
