@@ -26,8 +26,8 @@
 # ============================================================================
 # CAT
 
-#CAT_PORT = '/dev/ttyUSB0'
-CAT_PORT = 'COM4'
+CAT_PORT = '/dev/ttyUSB0'
+#CAT_PORT = 'COM4'
 BAUD = 9600
 
 # CAT variants
