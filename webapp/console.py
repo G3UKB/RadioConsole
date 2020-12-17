@@ -205,18 +205,18 @@ if __name__ == '__main__':
         access_log.removeHandler(handler)
     
     # Start
-    cherrypy.tree.mount(webapp, "", cherrypy_conf)
-    cherrypy.quickstart()
-    cherrypy.engine.start()
-    try:
-        while True:
-            sleep(1)
-    except:
-        pass
+    #cherrypy.tree.mount(webapp, "", cherrypy_conf)
+    #cherrypy.quickstart()
+    #cherrypy.engine.start()
+    #try:
+    #    while True:
+    #        sleep(1)
+    #except:
+    #    pass
     
-    #cherrypy.quickstart(webapp, config=cherrypy_conf)
+    cherrypy.quickstart(webapp, config=cherrypy_conf)
     g_cat.terminate()
-    cherrypy.engine.exit()
+    #cherrypy.engine.exit()
     print("Closing")
         
     
