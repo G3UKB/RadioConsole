@@ -301,7 +301,7 @@ class CATThrd (threading.Thread):
 		""" Thread entry point """
 		
 		# Handles all CAT interactions with an external tranceiver
-		self.__msgq.put('CAT thread running...')	
+		print('CAT thread running...')	
 		while not self.__terminate:
 			try:
 				# Requests are queued
