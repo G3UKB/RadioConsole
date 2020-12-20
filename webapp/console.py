@@ -43,7 +43,6 @@ import cat
 g_rate = 0.01
 g_f = 7.1
 g_cat_q = queue.Queue()
-g_msg_q = queue.Queue()
 g_cat = None
 
 #=====================================================
@@ -54,14 +53,13 @@ class Console:
     def __init__(self, name, model):
         
         global g_cat_q
-        global g_msg_q
         global g_cat
         
         self.__name = name
         self.__model = model
         
         # Create the cat instance
-        g_cat = cat.CAT(FT817ND, CAT_PORT, BAUD, g_cat_q, g_msg_q)
+        g_cat = cat.CAT(FT817ND, CAT_PORT, BAUD, g_cat_q)
         g_cat.run()
         
     # Expose the index method through the web
@@ -204,19 +202,21 @@ if __name__ == '__main__':
     for handler in tuple(access_log.handlers):
         access_log.removeHandler(handler)
     
-    # Start
-    #cherrypy.tree.mount(webapp, "", cherrypy_conf)
-    #cherrypy.quickstart()
-    #cherrypy.engine.start()
-    #try:
-    #    while True:
-    #        sleep(1)
-    #except:
-    #    pass
+    # Start the engine
+    cherrypy.config.update(cherrypy_conf)
+    cherrypy.tree.mount(webapp, "", config=cherrypy_conf             )
+    cherrypy.engine.start()
     
-    cherrypy.quickstart(webapp, config=cherrypy_conf)
+    # Wait for exit
+    try:
+        while True:
+            sleep(1)
+    except:
+        pass
+    
+    # Tidy up
     g_cat.terminate()
-    #cherrypy.engine.exit()
-    print("Closing")
+    cherrypy.engine.exit()
+    print("Radio Console closing...")
         
     

@@ -57,7 +57,7 @@ To define a new protocol:
 # CAT class for all rigs
 class CAT:
 	
-	def __init__(self, rig, com, baud, catq, msgq):
+	def __init__(self, rig, com, baud, catq):
 		"""
 		Constructor
 		
@@ -66,14 +66,12 @@ class CAT:
 			com		--  COM port to which rig is connected
 			baud	--	baud rate rig is set to
 			catq	--	CAT responses here
-			msgq	--	status messages here
 		"""
 	
 		self.__rig 	= rig
 		self.__com = com
 		self.__baud = baud
 		self.__catq = catq
-		self.__msgq = msgq
 		
 		# Get our command set
 		if rig not in CAT_COMMAND_SETS:
@@ -103,13 +101,13 @@ class CAT:
 				self.__ports = self.__list_serial_ports()
 				self.__device = serial.Serial(port=self.__com, baudrate=self.__baud, parity=self.__command_set[SERIAL][PARITY], stopbits=self.__command_set[SERIAL][STOP_BITS], timeout=self.__command_set[SERIAL][TIMEOUT])
 				self.__port_open = True
-				self.__msgq.put("Opened port %s" % self.__com)
+				print("Opened port %s" % self.__com)
 				# Create and start the CAT thread
-				self.__cat_thrd = CATThrd(self.__rig, self.__command_set, self.__device, self.__catq, self.__msgq)
+				self.__cat_thrd = CATThrd(self.__rig, self.__command_set, self.__device, self.__catq)
 				self.__cat_thrd.start()
 			except (OSError, serial.SerialException):
 				# Failed to open the port, radio device probably still off
-				self.__msgq.put('Failed to open COM port %s for CAT! Available ports are %s.' % (self.__com, self.__ports))
+				print('Failed to open COM port %s for CAT! Available ports are %s.' % (self.__com, self.__ports))
 				return False
 			
 		return True
@@ -117,7 +115,6 @@ class CAT:
 	#-----------------------------------------------	
 	def terminate(self):
 		""" Ask the thread to terminate and wait for it to exit """
-		
 		if self.__cat_thrd != None:
 			self.__cat_thrd.terminate()
 			# Wait for the thread to exit
@@ -213,7 +210,7 @@ class CAT:
 # CAT execution thread for all devices
 class CATThrd (threading.Thread):
 	
-	def __init__(self, rig, command_set, device, catq, msgq):
+	def __init__(self, rig, command_set, device, catq):
 		"""
 		Constructor
 		
@@ -222,7 +219,6 @@ class CATThrd (threading.Thread):
 			command_set	--	command set to use
 			device   	--  an open device for the transport
 			catq		--	CAT responses here
-			msgq		--	messages here
 		"""
 
 		super(CATThrd, self).__init__()
@@ -232,7 +228,6 @@ class CATThrd (threading.Thread):
 		self.__device = device
 		self.__callback = None
 		self.__catq = catq
-		self.__msgq = msgq
 		
 		# Class vars
 		self.__cat_cls_inst = self.__command_set[CLASS](command_set)
@@ -356,9 +351,9 @@ class CATThrd (threading.Thread):
 				sleep(0.1)
 			except Exception as e:
 				# Oops
-				print(traceback.format_exc())
+				print("Error in CAT thread [%s]" % traceback.format_exc())
 				self.__catq.put((False, 'ERROR [%s]' % (str(e))))
-		self.__msgq.put('CAT thread exiting...')
+		print('CAT thread exiting...')
 		
 """
 
@@ -1012,83 +1007,3 @@ CAT_COMMAND_SETS = {
 		}
 	}
 }
-
-#======================================================================================================================
-# Testing code
-
-#com port, baud rate
-DEV_1 = 'COM3'
-DEV_2 = '/dev/ttyACM0'
-DEV_3 = '/dev/ttyUSB0'
-
-BAUD_1 = 4800
-BAUD_2 = 9600
-BAUD_3 = 19200
-	
-def response(q):
-	while len(q) > 0:
-		print("Response: %s" % q.popleft())
-
-def status(q):
-	while len(q) > 0:
-		print("Status: %s" % q.popleft())
-
-def do_command(cat, msgq, resq, cmd, param = None):
-	if param != None:
-		cat.do_command(cmd, param)
-	else:
-		cat.do_command(cmd)
-	sleep(0.1)
-	status(msgq)
-	response(resq)
-	sleep(1)
-		
-def main():
-	msgq = deque()
-	resq = deque()
-	try:
-		# Create instance
-		cat = CAT('FT817ND', DEV_1, BAUD_2, resq, msgq)
-		if not cat.run():
-			print("Failed to run!")
-			status(msgq)
-			return
-		sleep(1)
-		print("Mode for id 4: ", cat.mode_for_id(4))
-		print("id for mode FM: ", cat.id_for_mode('FM'))
-		print("filter for mode FM: ", cat.bandwidth_for_mode("FM"))
-		
-		print("Set freq 7.123MHz")
-		do_command(cat, msgq, resq, CAT_FREQ_SET, 7.123)
-		
-		print("Get freq")
-		do_command(cat, msgq, resq, CAT_FREQ_GET)
-		
-		print("Set mode AM")
-		do_command(cat, msgq, resq, CAT_MODE_SET, MODE_AM)
-		
-		print("Get mode")
-		do_command(cat, msgq, resq, CAT_MODE_GET)
-		
-		print("Set TX")
-		do_command(cat, msgq, resq, CAT_PTT_SET, True)
-		
-		print("PTT status")
-		do_command(cat, msgq, resq, CAT_PTT_GET, True)
-		
-		print("Set RX")
-		do_command(cat, msgq, resq, CAT_PTT_SET, False)
-		
-		print("PTT status")
-		do_command(cat, msgq, resq, CAT_PTT_GET)
-		
-		cat.terminate()
-		status(msgq)
-		response(resq)
-		
-	except Exception as e:
-		print ('Exception','Exception [%s][%s]' % (str(e), traceback.format_exc()))
-
-# Entry point       
-if __name__ == '__main__':
-	main()
