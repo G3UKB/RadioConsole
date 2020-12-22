@@ -1,4 +1,53 @@
+//
+// page.js
+//
+// Javascript for page.py
+// 
+// Copyright (C) 2020 by G3UKB Bob Cowdery
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//    
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//    
+// You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//    
+//  The author can be reached by email at:   
+//     bob@bobcowdery.plus.com
+//
 
+//////////////////////////////////////////////////////////////////
+// Main code
+$(document).ready(function() {
+  
+  ////////////////////////////////////////////
+  // Dial
+  do_dial();
+  
+  ////////////////////////////////////////////
+  // Frequency increment selection
+  do_increment();
+  
+  ////////////////////////////////////////////
+  // Mode selection
+  do_mode();
+  
+  ////////////////////////////////////////////
+  // Band selection
+  do_band();
+});
+
+//////////////////////////////////////////////////////////////////
+// Support functions
+
+////////////////////////////////////////////
+// Mouse over highlight rate
 function highlight_rate(rate) {
     $("#100KHz").css('background', "#e5e5e5");
     $("#10KHz").css('background', "#e5e5e5");
@@ -8,6 +57,8 @@ function highlight_rate(rate) {
     rate.css('background', "#a5e5e5");
   }
 
+////////////////////////////////////////////
+// Mouse over highlight mode
 function highlight_mode(mode) {
     $("#LSB").css('background', "#e5e5e5");
     $("#USB").css('background', "#e5e5e5");
@@ -15,7 +66,9 @@ function highlight_mode(mode) {
     $("#FM").css('background', "#e5e5e5");
     mode.css('background', "#a5e5e5");
   }
-  
+
+////////////////////////////////////////////
+// Mouse over highlight band  
 function highlight_band(band) {
     $("#B160").css('background', "#e5e5e5");
     $("#B80").css('background', "#e5e5e5");
@@ -28,6 +81,8 @@ function highlight_band(band) {
     band.css('background', "#a5e5e5");
   }
 
+////////////////////////////////////////////
+// Set new frequency
 function set_freq(string) {
     $("#MHz100").text(string[0]);
     $("#MHz10").text(string[1]);
@@ -39,8 +94,10 @@ function set_freq(string) {
     $("#Hz10").text(string[7]);
     $("#Hz1").text(string[8]);
   }
-    
-$(document).ready(function() {
+
+////////////////////////////////////////////
+// Do frequenct jog dial
+function do_dial() {
   var el = document.getElementById('dial');
   var dial = JogDial(el, {debug: true});
   dial.on("mousemove", function(e){
@@ -54,6 +111,11 @@ $(document).ready(function() {
       });
     e.preventDefault();
   });
+}
+
+////////////////////////////////////////////
+// Set frequency increment
+function do_increment() {
   $("#100KHz").click(function(e) {
     highlight_rate($("#100KHz"));
     $.ajax({
@@ -109,6 +171,11 @@ $(document).ready(function() {
     });
     e.preventDefault();
   });
+}
+
+////////////////////////////////////////////
+// Set mode
+function do_mode() {
   $("#LSB").click(function(e) {
     highlight_mode($("#LSB"));
     $.ajax({
@@ -153,7 +220,11 @@ $(document).ready(function() {
     });
     e.preventDefault();
   });
-  
+}
+
+////////////////////////////////////////////
+// Set band
+function do_band() {
   $("#B160").click(function(e) {
     highlight_band($("#B160"));
     $.ajax({
@@ -266,6 +337,5 @@ $(document).ready(function() {
       });
     e.preventDefault();
   });
-});
-
+}
 
