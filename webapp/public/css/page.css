@@ -99,21 +99,37 @@
 /*-------------------------------------------------*/
 /* Freq digit styles */
 .MHz {
+	position|: static;
 	font-size: 50px;
 	color: blue;
+}
+
+.MHz:hover {
+	color: red;
 }
 
 .KHz {
+	position|: static;
 	font-size: 50px;
 	color: blue;
 }
 
+.KHz:hover {
+	color: red;
+}
+
 .Hz {
+	position|: static;
 	font-size: 40px;
 	color: orange;
 }
 
+.Hz:hover {
+	color: red;
+}
+
 .Sep {
+	position|: static;
 	font-size: 50px;
 }
 

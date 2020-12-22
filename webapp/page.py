@@ -77,8 +77,7 @@ def get_header(name):
 def get_frequency(model):
     
     m = model.get_model()
-    content = ''' 
-    <p>
+    content = '''  
     <label id="MHz100" class="MHz">0</label>
     <label id="MHz10" class="MHz">0</label>
     <label id="MHz1" class="MHz">0</label>
@@ -90,7 +89,6 @@ def get_frequency(model):
     <label id="Hz100" class="Hz">0</label>
     <label id="Hz10" class="Hz">0</label>
     <label id="Hz1" class="Hz">0</label>
-    </p>
     '''
     return content
 
