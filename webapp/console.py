@@ -112,17 +112,12 @@ class ScrollWebService(object):
     
     #-------------------------------------------------
     # Called by a PUT request
-    def PUT(self, value):
+    def PUT(self, scroll):
         global g_f
-        print("data: ", value)
+        #print("data: ", scroll)
         
-        value = float(value)
-        if value > 0:
-            # Freq up
-            g_f = g_f + value/1000000.0
-        else:
-            # Freq down
-            g_f = g_f - value/1000000.0
+        scroll = float(scroll)
+        g_f = g_f + scroll/1000000.0
         # Convert float freq to a 9 digit string.
         hz = int(g_f * 1000000)
         s = str(hz)

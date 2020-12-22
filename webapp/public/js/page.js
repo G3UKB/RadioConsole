@@ -86,6 +86,34 @@ function highlight_band(band) {
   }
 
 ////////////////////////////////////////////
+// Do ajax for scrolling
+function execute_scroll(e, inc) {
+  if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+    // Scroll up
+    $.ajax({
+      type: "PUT",
+      url: "/scroll_service",
+      data: {"scroll": inc}
+    })
+    .done(function (string) {
+      set_freq(string);
+    });
+  }
+  else {
+    // Scroll down
+    $.ajax({
+      type: "PUT",
+      url: "/scroll_service",
+      data: {"scroll": -inc}
+    })
+    .done(function (string) {
+      set_freq(string);
+    });
+  }
+  e.preventDefault();
+}
+
+////////////////////////////////////////////
 // Set new frequency
 function set_freq(string) {
     $("#MHz100").text(string[0]);
@@ -120,30 +148,32 @@ function do_dial() {
 ////////////////////////////////////////////
 // Do scroll frequency
 function do_scroll() {
+  $(Hz1).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 1);
+  });
   $(Hz10).bind('mousewheel DOMMouseScroll', function(e){
-      if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
-        // Scroll up
-        $.ajax({
-          type: "PUT",
-          url: "/scroll_service",
-          data: {"scroll": "10"}
-        })
-        .done(function (string) {
-          set_freq(string);
-        });
-      }
-      else {
-        // Scroll down
-        $.ajax({
-          type: "PUT",
-          url: "/scroll_service",
-          data: {"scroll": "-10"}
-        })
-        .done(function (string) {
-          set_freq(string);
-        });
-      }
-      e.preventDefault();
+    execute_scroll(e, 10);
+  });
+  $(Hz100).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 100);
+  });
+  $(KHz1).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 1000);
+  });
+  $(KHz10).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 10000);
+  });
+  $(KHz100).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 100000);
+  });
+  $(MHz1).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 1000000);
+  });
+  $(MHz10).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 10000000);
+  });
+  $(MHz100).bind('mousewheel DOMMouseScroll', function(e){
+    execute_scroll(e, 100000000);
   });
 }
 
