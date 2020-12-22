@@ -101,22 +101,36 @@ class DialWebService(object):
         g_cat.do_command(CAT_FREQ_SET, hz)
         # Update the UI
         return (str(hz)).rjust(9, '0')
+
+@cherrypy.expose
+class ScrollWebService(object):
+    
+    def __init__(self):
+        pass
+    
+    @cherrypy.tools.accept(media='text/plain')
     
     #-------------------------------------------------
-    # Called by a GET request
-    def GET(self):
-        return "GET called"
-
-    #-------------------------------------------------
-    # Called by a POST request
-    def POST(self, data):
-        return "POST called"
+    # Called by a PUT request
+    def PUT(self, value):
+        global g_f
+        print("data: ", value)
+        
+        value = float(value)
+        if value > 0:
+            # Freq up
+            g_f = g_f + value/1000000.0
+        else:
+            # Freq down
+            g_f = g_f - value/1000000.0
+        # Convert float freq to a 9 digit string.
+        hz = int(g_f * 1000000)
+        s = str(hz)
+        # Set new frequency
+        g_cat.do_command(CAT_FREQ_SET, hz)
+        # Update the UI
+        return (str(hz)).rjust(9, '0')
     
-    #-------------------------------------------------
-    # Called by a DELETE request
-    def DELETE(self):
-        return "DELETE called"
-
 @cherrypy.expose
 class RateWebService(object):
     
@@ -193,6 +207,7 @@ if __name__ == '__main__':
     # Create web app instances
     webapp = Console('Web Console', model)
     webapp.dial_service = DialWebService()
+    webapp.scroll_service = ScrollWebService()
     webapp.rate_service = RateWebService()
     webapp.mode_service = ModeWebService()
     webapp.band_service = BandWebService()

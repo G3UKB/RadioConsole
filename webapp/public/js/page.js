@@ -27,8 +27,12 @@
 $(document).ready(function() {
   
   ////////////////////////////////////////////
-  // Dial
+  // Dial jog frequency
   do_dial();
+  
+  ////////////////////////////////////////////
+  // Scroll frequency
+  do_scroll();
   
   ////////////////////////////////////////////
   // Frequency increment selection
@@ -110,6 +114,36 @@ function do_dial() {
         set_freq(string);
       });
     e.preventDefault();
+  });
+}
+
+////////////////////////////////////////////
+// Do scroll frequency
+function do_scroll() {
+  $(Hz10).bind('mousewheel DOMMouseScroll', function(e){
+      if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+        // Scroll up
+        $.ajax({
+          type: "PUT",
+          url: "/scroll_service",
+          data: {"scroll": "10"}
+        })
+        .done(function (string) {
+          set_freq(string);
+        });
+      }
+      else {
+        // Scroll down
+        $.ajax({
+          type: "PUT",
+          url: "/scroll_service",
+          data: {"scroll": "-10"}
+        })
+        .done(function (string) {
+          set_freq(string);
+        });
+      }
+      e.preventDefault();
   });
 }
 
