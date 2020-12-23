@@ -46,7 +46,7 @@ def get_page(name, model):
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.21/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-2.0.3.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="http://jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
         <script type="text/javascript" src="/static/js/jogDial.js"></script>
         <script type="text/javascript" src="/static/js/page.js"></script>
     </head>
