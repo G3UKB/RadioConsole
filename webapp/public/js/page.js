@@ -35,6 +35,10 @@ $(document).ready(function() {
   do_scroll();
   
   ////////////////////////////////////////////
+  // Slider frequency
+  do_slider();
+  
+  ////////////////////////////////////////////
   // Frequency increment selection
   do_increment();
   
@@ -86,7 +90,24 @@ function highlight_band(band) {
   }
 
 ////////////////////////////////////////////
-// Do ajax for scrolling
+// Set new frequency
+function set_freq(string) {
+    $("#MHz100").text(string[0]);
+    $("#MHz10").text(string[1]);
+    $("#MHz1").text(string[2]);
+    $("#KHz100").text(string[3]);
+    $("#KHz10").text(string[4]);
+    $("#KHz1").text(string[5]);
+    $("#Hz100").text(string[6]);
+    $("#Hz10").text(string[7]);
+    $("#Hz1").text(string[8]);
+  }
+
+//////////////////////////////////////////////////////////////////
+// Execute functions
+  
+////////////////////////////////////////////
+// Do scroll exchange
 function execute_scroll(e, inc) {
   if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
     // Scroll up
@@ -114,18 +135,10 @@ function execute_scroll(e, inc) {
 }
 
 ////////////////////////////////////////////
-// Set new frequency
-function set_freq(string) {
-    $("#MHz100").text(string[0]);
-    $("#MHz10").text(string[1]);
-    $("#MHz1").text(string[2]);
-    $("#KHz100").text(string[3]);
-    $("#KHz10").text(string[4]);
-    $("#KHz1").text(string[5]);
-    $("#Hz100").text(string[6]);
-    $("#Hz10").text(string[7]);
-    $("#Hz1").text(string[8]);
-  }
+// Do slider frequency
+function do_slider() {
+  $( "#slider" ).slider();
+}
 
 ////////////////////////////////////////////
 // Do frequenct jog dial

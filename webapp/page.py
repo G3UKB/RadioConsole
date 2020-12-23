@@ -43,7 +43,10 @@ def get_page(name, model):
     <html>
     <head>
         <link href="/static/css/page.css" rel="stylesheet">
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.21/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-2.0.3.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="http://jquery.ui.touch-punch.min.js"></script>
         <script type="text/javascript" src="/static/js/jogDial.js"></script>
         <script type="text/javascript" src="/static/js/page.js"></script>
     </head>
@@ -51,6 +54,7 @@ def get_page(name, model):
         <div id="container" class="grid-container">
             <div id="header" class="header-item"> %s </div>
             <div id="frequency" class="freq-item"> %s </div>
+            <div id="slider"></div>
             <div id="dial" class="dial-item"></div>
             <div id="increment" class="inc-item"> %s </div>
             <div id="mode" class="mode-item"> %s </div>
@@ -91,6 +95,11 @@ def get_frequency(model):
     <label id="Hz1" class="Hz">0</label>
     '''
     return content
+
+#------------------------------------------------- 
+# Slider div
+def get_slider(model):
+    return ""
 
 #------------------------------------------------- 
 # Increament div
