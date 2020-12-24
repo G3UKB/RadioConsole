@@ -26,6 +26,11 @@
 /*-------------------------------------------------*/
 /* Style by id */
 
+#dial_knob {
+	background: darkgray;
+	border-radius: 50%;
+}
+
 #slider {
 	border: 1px solid gray;
 	border-radius: 5px;
@@ -73,7 +78,8 @@
 }
 
 .dial-item {
-	text-align: center;
+	background: lightgray;
+	border-radius: 50%;
 	margin: 5px 5px 5px 5px;
 	grid-column: 1;
 	grid-row: 4 / span 3;

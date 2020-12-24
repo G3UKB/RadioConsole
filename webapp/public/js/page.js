@@ -165,7 +165,7 @@ function do_slider() {
 // Do frequenct jog dial
 function do_dial() {
   var el = document.getElementById('dial');
-  var dial = JogDial(el, {debug: true});
+  var dial = JogDial(el, {debug: false});
   dial.on("mousemove", function(e){
       $.ajax({
           type: "PUT",
