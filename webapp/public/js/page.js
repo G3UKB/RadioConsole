@@ -103,6 +103,20 @@ function set_freq(string) {
     $("#Hz1").text(string[8]);
   }
 
+////////////////////////////////////////////
+// Set new frequency
+function slider_freq() {
+  // Fine tune
+  $.ajax({
+     type: "PUT",
+     url: "/slider_service",
+     data: {slider: $( "#slider" ).slider("value")}
+   })
+   .done(function (string) {
+     set_freq(string);
+   });
+}
+  
 //////////////////////////////////////////////////////////////////
 // Execute functions
   
@@ -137,7 +151,14 @@ function execute_scroll(e, inc) {
 ////////////////////////////////////////////
 // Do slider frequency
 function do_slider() {
-  $( "#slider" ).slider();
+  $( "#slider" ).slider({
+      orientation: "horizontal",
+      max: 100,
+      value: 50,
+      slide: function( event, ui ) {
+        slider_freq();
+      }
+    });
 }
 
 ////////////////////////////////////////////

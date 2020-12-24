@@ -85,7 +85,6 @@ class DialWebService(object):
     def PUT(self, rotation):
         global g_rate, g_f
         #print("data: ", rotation)
-        # Lets say KHz for testing
         rotation = int((float(rotation)))
         if rotation > self.__lastRotation:
             # Freq up
@@ -121,6 +120,37 @@ class ScrollWebService(object):
         # Convert float freq to a 9 digit string.
         hz = int(g_f * 1000000)
         s = str(hz)
+        # Set new frequency
+        g_cat.do_command(CAT_FREQ_SET, hz)
+        # Update the UI
+        return (str(hz)).rjust(9, '0')
+
+@cherrypy.expose
+class SliderWebService(object):
+    
+    def __init__(self):
+        # Starts mid position
+        # Range 0-100
+        self.__lastSlider = 50
+    
+    @cherrypy.tools.accept(media='text/plain')
+    
+    #-------------------------------------------------
+    # Called by a PUT request
+    def PUT(self, slider):
+        global g_rate, g_f
+        #print("data: ", value)
+        slider = int((float(slider)))
+        if slider > self.__lastSlider:
+            # Freq up
+            g_f = g_f + (slider - self.__lastSlider) * g_rate 
+        else:
+            # Freq down
+            g_f = g_f - + (self.__lastSlider - slider) * g_rate 
+        # Convert float freq to a 9 digit string.
+        hz = int(g_f * 1000000)
+        s = str(hz)
+        self.__lastSlider = slider
         # Set new frequency
         g_cat.do_command(CAT_FREQ_SET, hz)
         # Update the UI
@@ -203,6 +233,7 @@ if __name__ == '__main__':
     webapp = Console('Web Console', model)
     webapp.dial_service = DialWebService()
     webapp.scroll_service = ScrollWebService()
+    webapp.slider_service = SliderWebService()
     webapp.rate_service = RateWebService()
     webapp.mode_service = ModeWebService()
     webapp.band_service = BandWebService()
